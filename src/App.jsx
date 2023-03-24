@@ -113,7 +113,7 @@ function App() {
         message={"Input is empty"}
         color={"red-500"}
       />
-      {show && <Toast show={show} setShow={setShow} message={"Copied"} style={"green-500"}/>}
+      {/* {show && <Toast show={show} setShow={setShow} message={"Copied"} style={"green-500"}/>} */}
     </main>
   );
 }
