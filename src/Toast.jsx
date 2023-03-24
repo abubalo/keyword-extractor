@@ -1,16 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 const Toast = ({ message, show, setShow, style = "white", color="black" }) => {
+  const [visible, setVisible] = useState(false)
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setShow(false);
-    }, 5000);
+    let timer
+    if(show){
+      timer = setTimeout(() => {
+        setShow(false);
+        setVisible(true)
+      }, 2000);
+    }
 
     return () => {
       clearTimeout(timer);
     };
-  }, []);
+  }, [show, setShow]);
 
   return (
     <AnimatePresence>

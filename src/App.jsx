@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Modal from "./Modal";
 import Toast from "./Toast";
 
@@ -12,9 +12,7 @@ function App() {
   async function extractKeywords(e) {
     setIsOpen(true);
     setLoading(true);
-    
-    
-    
+
     const options = {
       method: "POST",
       headers: {
@@ -31,23 +29,31 @@ function App() {
       }),
     };
 
-    if (text === "" && text.length < 20) {
-      setShow(true)
-      setIsOpen(false)
-    }else{
-
+    if (text === "") {
+      setShow(true);
+      setIsOpen(false);
+    } else {
       const response = await fetch(`${import.meta.env.VITE_URL}`, options);
-      const json = await response.json()
-  
-      const data = json.choices[0].text.trim()
-      setKeywords(data)
-      console.log(data)
-      setLoading(false)
-    }
+      const json = await response.json();
 
+      const data = json.choices[0].text.trim();
+      setKeywords(data);
+      setLoading(false);
+    }
   }
 
-  // console.log(keywords);
+  function copyToClipboard(text) {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text)
+        .then(() => {
+          setShow(true)
+        })
+        .catch((err) => {
+          console.error('Failed to copy to clipboard: ', err.message);
+        });
+    }
+  }
+  
   return (
     <main className="w-full h-screen bg-background flex flex-col justify-center items-center">
       <div className="w-1/2 flex flex-col items-center justify-center p-4 bg-secondary text-slate-50 space-y-3 rounded-md">
@@ -66,10 +72,8 @@ function App() {
         </button>
       </div>
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
-        <div className="font-medium font-mono border w-full">
-          {keywords}
-        </div>
-        <span className="absolute top-0 right-1 text-slate-800 cursor-pointer">
+        <div className="font-medium font-mono border w-full">{keywords}</div>
+        <span onClick={()=> setIsOpen(false)} className="absolute top-0 right-1 text-slate-800 cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -85,7 +89,7 @@ function App() {
             />
           </svg>
         </span>
-        <button className="w-full flex justify-between px-4 py-3 bg-primary rounded-md hover:bg-hoverPrimary active:scale-95 transition-transform duration-200">
+        <button onClick={()=> copyToClipboard(keywords)} className="w-full flex justify-between px-4 py-3 bg-primary rounded-md hover:bg-hoverPrimary active:scale-95 transition-transform duration-200">
           <span>Copy</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +107,13 @@ function App() {
           </svg>
         </button>
       </Modal>
-      <Toast show={show} setShow={setShow} message={"Input is empty"} color={"red-500"}/>
+      <Toast
+        show={show}
+        setShow={setShow}
+        message={"Input is empty"}
+        color={"red-500"}
+      />
+      {show && <Toast show={show} setShow={setShow} message={"Copied"} style={"green-500"}/>}
     </main>
   );
 }
