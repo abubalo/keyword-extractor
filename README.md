@@ -38,7 +38,7 @@ Keywords Extractor was built using the following technologies:
 
 - OpenAI's davinci-003 language model
 - React
-- Material UI
+- Tailwindcss
 
 ## Disclaimer
 
