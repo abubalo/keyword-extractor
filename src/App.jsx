@@ -56,7 +56,7 @@ function App() {
   
   return (
     <main className="w-full h-screen bg-background flex flex-col justify-center items-center">
-      <div className="w-1/2 flex flex-col items-center justify-center p-4 bg-secondary text-slate-50 space-y-3 rounded-md">
+      <div className="w-[90%] md:w-1/2 flex flex-col items-center justify-center p-4 bg-secondary text-slate-50 space-y-3 rounded-md">
         <textarea
           name=""
           value={text}
@@ -68,7 +68,7 @@ function App() {
           onClick={extractKeywords}
           className="w-full p-4 text-xl text-black font-semibold bg-primary rounded-md hover:bg-hoverPrimary active:scale-95 transition-transform duration-200"
         >
-          Extract
+          Extract Keywords
         </button>
       </div>
       <Modal isOpen={isOpen} setIsOpen={setIsOpen}>
