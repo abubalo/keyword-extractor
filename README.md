@@ -4,7 +4,7 @@ Keywords Extractor is a web-based tool that automatically extracts keywords from
 
 ## Demo
 
-You can check out the live demo of the Keywords Extractor app at https://keywords-extractor.vercel.app/.
+You can check out the live demo of the Keywords Extractor app at [keyword-extractor](https://keywords-extractor.vercel.app/).
 
 ## Features
 
